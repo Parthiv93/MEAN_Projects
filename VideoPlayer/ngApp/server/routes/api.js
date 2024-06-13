@@ -3,7 +3,9 @@ const router=express.Router();
 const mongoose=require('mongoose');
 const Video=require('../models/video');
 
-const db= "mongodb+srv://parthivm93:2kzVLswQSUT4Gyfy@s3filetracker.aokysux.mongodb.net/videoplayer?retryWrites=true&w=majority&ssl=true"
+require('dotenv').config();
+
+const db= process.env.MONGODB_URI;
 
 mongoose.connect(db)
 .then(() => {
