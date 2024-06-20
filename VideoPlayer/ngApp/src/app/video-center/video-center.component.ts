@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Video } from '../video';
+import { VideoService } from '../video.service';
 
 @Component({
   selector: 'app-video-center',
@@ -8,22 +9,26 @@ import { Video } from '../video';
 })
 export class VideoCenterComponent implements OnInit {
 
-  videos: Video[] = [
-    {'_id': '1', 'title': 'Title 1', 'url': 'URL 1', 'description': 'Description 1'},
-    {'_id': '2', 'title': 'Title 2', 'url': 'URL 2', 'description': 'Description 2'},
-    {'_id': '3', 'title': 'Title 3', 'url': 'URL 3', 'description': 'Description 3'},
-    {'_id': '4', 'title': 'Title 4', 'url': 'URL 4', 'description': 'Description 4'}
-  ];
-
+  videos: Video[] = []; // Initialize as an empty array
   selectedVideo!: Video;
 
-  constructor() { }
+  constructor(private _videoService: VideoService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { 
+    this._videoService.getVideos()
+      .subscribe(
+        resVideoData => {
+          console.log('Video data fetched:', resVideoData); // Add logging
+          this.videos = resVideoData;
+        },
+        err => {
+          console.error('Error fetching videos:', err);
+        }
+      );
   }
-  onSelectVideo(vid: Video) {
+
+  onSelectVideo(vid: Video): void {
     this.selectedVideo = vid;
     console.log(this.selectedVideo);
   }
-
 }
