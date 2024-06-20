@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Video } from './video';
 
@@ -8,9 +8,16 @@ import { Video } from './video';
 })
 export class VideoService {
   private _getUrl = '/api/videos';
+  private _postUrl = '/api/video';
   constructor(private _http: HttpClient) { }
 
   getVideos(): Observable<Video[]> {
     return this._http.get<Video[]>(this._getUrl);
+  }
+
+  addVideo(video: Video): Observable<Video> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    return this._http.post<Video>(this._postUrl, JSON.stringify(video), options);
   }
 }
