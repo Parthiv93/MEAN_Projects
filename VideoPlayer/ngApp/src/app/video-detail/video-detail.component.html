@@ -1,6 +1,17 @@
 <div>
-    <h2>{{ video.title }}</h2>
-    <p>{{ video.url }}</p>
-    <p>{{ video.description }}</p>
-  </div>
-  
+  <form>
+    <div *ngIf="editTitle" class="form-group">
+      <label for="title">Title</label>
+      <input type="text" class="form-control" id="title" [(ngModel)]="video.title" required name="title">
+    </div>
+    <h3 *ngIf="!editTitle" (click)="onTitleClick()">{{video.title}}</h3>
+    <div class="form-group">
+      <label for="url">URL</label>
+      <input type="text" class="form-control" id="url" [(ngModel)]="video.url" required name="url">
+    </div>
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" [(ngModel)]="video.description"  required name="description"></textarea>
+    </div>
+  </form>
+</div>

@@ -6,5 +6,14 @@ import { Video } from '../video';
   styleUrls: ['./video-detail.component.css']
 })
 export class VideoDetailComponent {
-  @Input() video!: Video;
+  editTitle: boolean = false;
+  @Input() video: Video = new Video();
+
+  ngOnChanges() {
+    this.editTitle = false;
+  }
+
+  onTitleClick() {
+    this.editTitle = true;
+  }
 }
