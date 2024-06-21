@@ -63,12 +63,17 @@ mongoose.connect(db)
 
   router.delete('/videos/:id', async (req, res) => {
     try {
-      const video = await Video.findByIdAndRemove(req.params.id);
+      const video = await Video.findByIdAndDelete(req.params.id);
+      if (!video) {
+        return res.status(404).json({ error: 'Video not found' });
+      }
       res.json(video);
     } catch (err) {
-      res.status(500).send
+      console.error(err);
+      res.status(500).send('Server error');
     }
   });
+  
 
   
 

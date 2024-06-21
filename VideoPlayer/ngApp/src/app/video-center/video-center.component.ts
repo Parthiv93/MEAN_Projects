@@ -10,7 +10,7 @@ import { VideoService } from '../video.service';
 export class VideoCenterComponent implements OnInit {
 
   videos: Video[] = []; 
-  selectedVideo!: Video;
+  selectedVideo: Video | null = null;
 
   hidenewVideo: boolean = true;
 
@@ -47,6 +47,35 @@ export class VideoCenterComponent implements OnInit {
         }
       );
       this.hidenewVideo = true;
+  }
+
+  onUpdateVideoEvent(vid: any): void {
+    this._videoService.updateVideo(vid)
+      .subscribe(
+        resUpdatedVideo => vid = resUpdatedVideo,
+        err => {
+          console.error('Error updating video:', err);
+        }
+      );
+    // this.selectedVideo = null;
+  }
+
+  onDeleteVideoEvent(vid: any): void {
+    let videoArray = this.videos;
+    this._videoService.deleteVideo(vid)
+      .subscribe(
+        resDeletedVideo => {
+          for (let i = 0; i < videoArray.length; i++) {
+            if (videoArray[i]._id === vid._id) {
+              videoArray.splice(i, 1);
+            }
+          }
+        },
+        err => {
+          console.error('Error deleting video:', err);
+        }
+      );
+    this.selectedVideo = null;
   }
 
   newVideo(): void {

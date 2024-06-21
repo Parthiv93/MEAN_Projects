@@ -14,5 +14,7 @@
       <label for="description">Description</label>
       <textarea class="form-control" id="description" [(ngModel)]="video.description" required name="description"></textarea>
     </div>
+    <button type="button" (click)="updateVideo()" class="btn btn-primary">Update</button>
+    <button type="button" (click)="deleteVideo()" class="btn btn-danger">Delete</button>
   </form>
 </div>
