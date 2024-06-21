@@ -8,7 +8,8 @@ import { Video } from './video';
 })
 export class VideoService {
   private _getUrl = '/api/videos';
-  private _postUrl = '/api/video';
+  private _postUrl = '/api/videos';
+  private _putUrl = '/api/videos/';
   constructor(private _http: HttpClient) { }
 
   getVideos(): Observable<Video[]> {
@@ -19,5 +20,11 @@ export class VideoService {
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     let options = { headers: headers };
     return this._http.post<Video>(this._postUrl, JSON.stringify(video), options);
+  }
+
+  updateVideo(video: Video): Observable<Video> {
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    return this._http.put<Video>(this._putUrl + video._id, JSON.stringify(video), options);
   }
 }
